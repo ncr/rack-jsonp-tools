@@ -21,6 +21,7 @@ Gem::Specification.new do |s|
      "lib/rack/jsonp/method_override.rb",
      "lib/rack/jsonp/status_wrapper.rb",
      "lib/rack/jsonp/utils.rb",
+     "rack-jsonp-tools.gemspec",
      "test/callback_test.rb",
      "test/method_override_test.rb",
      "test/test_helper.rb"
