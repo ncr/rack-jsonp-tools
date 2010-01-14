@@ -2,7 +2,6 @@ require "test_helper"
 require "rack/jsonp/callback"
  
 class CallbackTest < Test::Unit::TestCase
-  
   def setup
     @status  = 200
     @headers = { "Content-Type" => "application/json", "Content-Length" => "2" }
@@ -36,7 +35,5 @@ class CallbackTest < Test::Unit::TestCase
       "Content-Length" => expected_body.size.to_s 
     }
     assert_equal expected_body, body
-
   end
-  
 end

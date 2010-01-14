@@ -53,9 +53,7 @@ module Rack
           block.call(@post)
         end
       end
-    
     end
-
 
   end
 end
