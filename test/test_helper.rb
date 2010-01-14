@@ -1,6 +1,6 @@
 require "rubygems"
 
-gem "test-unit"
+gem "test-unit", ">=2.0.0"
 
 require "test/unit"
 require "rack"
