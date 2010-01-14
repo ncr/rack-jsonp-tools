@@ -21,6 +21,7 @@ begin
     gem.authors = ["Jacek Becela"]
     gem.add_dependency "rack"
     gem.add_development_dependency "rack-test"
+    gem.add_development_dependency "test-unit", ">= 2.0"
   end
   Jeweler::GemcutterTasks.new
 rescue LoadError
