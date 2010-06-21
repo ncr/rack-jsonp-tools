@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rack-jsonp-tools}
-  s.version = "0.1.0"
+  s.version = "0.2.0"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jacek Becela"]
-  s.date = %q{2010-01-14}
+  s.date = %q{2010-06-21}
   s.description = %q{A collection of rack middlewares helping you add JSONP to your app}
   s.email = %q{jacek.becela@gmail.com}
   s.files = [
@@ -20,7 +20,6 @@ Gem::Specification.new do |s|
      "lib/rack/jsonp/callback.rb",
      "lib/rack/jsonp/method_override.rb",
      "lib/rack/jsonp/status_wrapper.rb",
-     "lib/rack/jsonp/utils.rb",
      "rack-jsonp-tools.gemspec",
      "test/callback_test.rb",
      "test/method_override_test.rb",
@@ -29,7 +28,7 @@ Gem::Specification.new do |s|
   s.homepage = %q{http://github.com/ncr/rack-jsonp-tools}
   s.rdoc_options = ["--charset=UTF-8"]
   s.require_paths = ["lib"]
-  s.rubygems_version = %q{1.3.5}
+  s.rubygems_version = %q{1.3.6}
   s.summary = %q{Add JSONP support to your app in less than 3 minutes! Method Override included for free!}
   s.test_files = [
     "test/callback_test.rb",
