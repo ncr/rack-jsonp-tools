@@ -20,14 +20,15 @@ module Rack
           @pre, @post = "#{callback}(", ")" 
 
           # Fix content length if present
-          if content_length = headers["Content-Length"]
-            headers["Content-Length"] = (@pre.size + content_length.to_i + @post.size).to_s
+          content_length = headers["Content-Length"].to_i
+
+          if content_length > 0
+            headers["Content-Length"] = (@pre.size + content_length + @post.size).to_s
+            headers["Content-Type"]   = "application/javascript" # Set proper content type as per RFC4329
+            [200, headers, self] # Override status
+          else
+            [status, headers, @body]
           end
-
-          # Set proper content type as per RFC4329
-          headers["Content-Type"] = "application/javascript"
-
-          [200, headers, self] # Override status
         else
           @app.call(env)
         end

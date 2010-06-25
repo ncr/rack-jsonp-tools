@@ -15,11 +15,14 @@ module Rack
           @pre, @post = '{"body": ', ', "status": ' + status.to_s + '}'
 
           # Fix content length if present
-          if content_length = headers["Content-Length"]
-            headers["Content-Length"] = (@pre.size + content_length.to_i + @post.size).to_s
-          end
+          content_length = headers["Content-Length"].to_i
 
-          [status, headers, self]
+          if content_length > 0
+            headers["Content-Length"] = (@pre.size + content_length + @post.size).to_s
+            [200, headers, self] # Override status
+          else
+            [status, headers, @body]
+          end
         else
           @app.call(env)
         end
