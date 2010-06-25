@@ -1,16 +1,23 @@
 require "test_helper"
-require "rack/jsonp/callback"
+require "rack/jsonp/status_wrapper"
  
-class CallbackTest < Test::Unit::TestCase
+class StatusWrapperTest < Test::Unit::TestCase
   def setup
     @status  = 401
-    @headers = { "Content-Type" => "application/json", "Content-Length" => "2" }
-    @body    = "{}"
+    @body    = "{ number: 666 }"
+    @headers = { "Content-Type" => "application/json", "Content-Length" => @body.size }
+  end
+  
+  def app
+    app = Rack::Builder.new # instance_eval fail
+    app.use Rack::JSONP::Callback
+    app.use Rack::JSONP::StatusWrapper
+    app.run lambda { |env| [@status, @headers, [@body]] }
+    app
   end
   
   test "doesn't change anything when callback is missing" do
     env = Rack::MockRequest.env_for("/")
-    app = Rack::JSONP::Callback.new(lambda { |env| [@status, @headers, [@body]] })
 
     status, headers, iterable = app.call(env)
     body = ""; iterable.each { |l| body << l }
@@ -20,14 +27,13 @@ class CallbackTest < Test::Unit::TestCase
     assert_equal @body, body
   end
   
-  test "wraps response with callback and updates headers" do
+  test "wraps response with status and updates headers" do
     env = Rack::MockRequest.env_for("/?_callback=callback")
-    app = Rack::JSONP::Callback.new(lambda { |env| [@status, @headers, [@body]] })
 
     status, headers, iterable = app.call(env)
     body = ""; iterable.each { |l| body << l }
 
-    expected_body = "callback(#{@body})"
+    expected_body = 'callback({"body": ' + @body + ', "status": ' + @status.to_s + '})'
 
     assert_equal 200, status
     assert_equal @headers, { 
