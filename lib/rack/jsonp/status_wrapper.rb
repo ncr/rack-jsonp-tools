@@ -19,7 +19,7 @@ module Rack
 
           if content_length > 0
             headers["Content-Length"] = (@pre.size + content_length + @post.size).to_s
-            [200, headers, self] # Override status
+            [status, headers, self] # Override status
           else
             [status, headers, @body]
           end
