@@ -27,7 +27,7 @@ module Rack
           # Set proper content type as per RFC4329
           headers["Content-Type"] = "application/javascript"
 
-          [status, headers, self]
+          [200, headers, self]
         else
           @app.call(env)
         end
