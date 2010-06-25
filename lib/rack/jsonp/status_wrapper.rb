@@ -11,13 +11,11 @@ module Rack
           # Call original app
           status, headers, @body = @app.call(env)
 
-          # Wrap
-          @pre, @post = '{"body": ', ', "status": ' + status.to_s + '}'
-
           # Fix content length if present
           content_length = headers["Content-Length"].to_i
 
           if content_length > 0
+            @pre, @post = '{"body": ', ', "status": ' + status.to_s + '}'
             headers["Content-Length"] = (@pre.size + content_length + @post.size).to_s
             [status, headers, self] # Override status
           else
