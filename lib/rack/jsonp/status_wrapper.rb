@@ -2,8 +2,8 @@ module Rack
   module JSONP
   
     class StatusWrapper
-      def initialize(app, callback_param = "_callback")
-        @app, @callback_param = app, callback_param
+      def initialize(app)
+        @app = app
       end
       
       def call(env)
