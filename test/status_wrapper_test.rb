@@ -3,7 +3,7 @@ require "rack/jsonp/status_wrapper"
  
 class StatusWrapperTest < Test::Unit::TestCase
   def setup
-    @status  = 401
+    @status  = 201
     @body    = "{ number: 666 }"
     @headers = { "Content-Type" => "application/json", "Content-Length" => @body.size }
   end

@@ -14,7 +14,7 @@ module Rack
           # Fix content length if present
           content_length = headers["Content-Length"].to_i
 
-          if content_length > 0
+          if (200...300).include?(status) && content_length > 0
             @pre, @post = '{"body": ', ', "status": ' + status.to_s + '}'
             headers["Content-Length"] = (@pre.size + content_length + @post.size).to_s
             [status, headers, self] # Override status

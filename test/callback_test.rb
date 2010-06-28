@@ -3,7 +3,7 @@ require "rack/jsonp/callback"
  
 class CallbackTest < Test::Unit::TestCase
   def setup
-    @status  = 401
+    @status  = 201
     @headers = { "Content-Type" => "application/json", "Content-Length" => "2" }
     @body    = "{}"
   end
@@ -35,5 +35,20 @@ class CallbackTest < Test::Unit::TestCase
       "Content-Length" => expected_body.size.to_s 
     }
     assert_equal expected_body, body
+  end
+  
+  test "doesn't touch response if outside of status range 200...300" do
+    env = Rack::MockRequest.env_for("/?_callback=callback")
+    app = Rack::JSONP::Callback.new(lambda { |env| [301, @headers, [@body]] })
+
+    status, headers, iterable = app.call(env)
+    body = ""; iterable.each { |l| body << l }
+
+    assert_equal 301, status
+    assert_equal @headers, { 
+      "Content-Type"   => "application/json", 
+      "Content-Length" => @body.size.to_s 
+    }
+    assert_equal @body, body
   end
 end
