@@ -16,14 +16,11 @@ module Rack
           # Call original app
           status, headers, @body = @app.call(env)
 
-          # Fix content length if present
-          content_length = headers["Content-Length"].to_i
-
-          if (200...300).include?(status) && content_length > 0
+          if headers["Content-Type"] == "application/json"
             @pre, @post = "#{callback}(", ")" 
-            headers["Content-Length"] = (@pre.size + content_length + @post.size).to_s
+            headers["Content-Length"] = (@pre.size + headers["Content-Length"].to_i + @post.size).to_s
             headers["Content-Type"]   = "application/javascript" # Set proper content type as per RFC4329
-            [200, headers, self] # Override status
+            [200, headers, self]
           else
             [status, headers, @body]
           end
