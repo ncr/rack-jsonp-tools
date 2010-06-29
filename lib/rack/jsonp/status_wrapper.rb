@@ -6,12 +6,12 @@ module Rack
         @app = app
       end
       
-      def call(env)
+      def call(env)        
         if env["jsonp.callback"]
           # Call original app
           status, headers, @body = @app.call(env)
 
-          if headers["Content-Type"] == "application/json"
+          if headers["Content-Type"].to_s.start_with?("application/json")
             @pre, @post = '{"body":', ', "status":' + status.to_s + '}'
             headers["Content-Length"] = (@pre.size + headers["Content-Length"].to_i + @post.size).to_s
             [status, headers, self]
