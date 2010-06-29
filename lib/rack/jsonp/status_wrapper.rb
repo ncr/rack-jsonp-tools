@@ -12,7 +12,7 @@ module Rack
           status, headers, @body = @app.call(env)
 
           if headers["Content-Type"] == "application/json"
-            @pre, @post = '{"body": ', ', "status": ' + status.to_s + '}'
+            @pre, @post = '{"body":', ', "status":' + status.to_s + '}'
             headers["Content-Length"] = (@pre.size + headers["Content-Length"].to_i + @post.size).to_s
             [status, headers, self]
           else

@@ -37,18 +37,15 @@ class CallbackTest < Test::Unit::TestCase
     assert_equal expected_body, body
   end
   
-  test "doesn't touch response if outside of status range 200...300" do
+  test "doesn't touch response if content type is not application/json" do
     env = Rack::MockRequest.env_for("/?_callback=callback")
-    app = Rack::JSONP::Callback.new(lambda { |env| [301, @headers, [@body]] })
+    app = Rack::JSONP::Callback.new(lambda { |env| [301, {}, [""]] })
 
     status, headers, iterable = app.call(env)
     body = ""; iterable.each { |l| body << l }
 
     assert_equal 301, status
-    assert_equal @headers, { 
-      "Content-Type"   => "application/json", 
-      "Content-Length" => @body.size.to_s 
-    }
-    assert_equal @body, body
+    assert_equal Hash.new, headers
+    assert_equal "", body
   end
 end

@@ -33,7 +33,7 @@ class StatusWrapperTest < Test::Unit::TestCase
     status, headers, iterable = app.call(env)
     body = ""; iterable.each { |l| body << l }
 
-    expected_body = 'callback({"body": ' + @body + ', "status": ' + @status.to_s + '})'
+    expected_body = 'callback({"body":' + @body + ', "status":' + @status.to_s + '})'
 
     assert_equal 200, status
     assert_equal @headers, { 
