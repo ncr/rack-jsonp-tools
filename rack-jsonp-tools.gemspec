@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = %q{rack-jsonp-tools}
-  s.version = "0.4.0"
+  s.version = "0.4.1"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Jacek Becela"]
-  s.date = %q{2010-08-02}
+  s.date = %q{2010-08-05}
   s.description = %q{A collection of rack middlewares helping you add JSONP to your app}
   s.email = %q{jacek.becela@gmail.com}
   s.files = [
@@ -17,6 +17,7 @@ Gem::Specification.new do |s|
      "Rakefile",
      "Readme",
      "VERSION",
+     "lib/rack-jsonp-tools.rb",
      "lib/rack/jsonp/callback.rb",
      "lib/rack/jsonp/method_override.rb",
      "lib/rack/jsonp/status_wrapper.rb",

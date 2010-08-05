@@ -16,8 +16,8 @@ module Rack
           # Call original app
           status, headers, @body = @app.call(env)
           if headers["Content-Type"].to_s.start_with?("application/json")
-            @pre, @post = "#{callback}(", ")" 
-            headers["Content-Length"] = (@pre.size + headers["Content-Length"].to_i + @post.size).to_s
+            @pre, @post = "#{callback}(", ")"
+            headers["Content-Length"] = (@pre.size + headers["Content-Length"].to_i + @post.size).to_s if headers["Content-Length"]
             headers["Content-Type"]   = "application/javascript" # Set proper content type as per RFC4329
             [200, headers, self]
           else
